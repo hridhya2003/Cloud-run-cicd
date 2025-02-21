@@ -1,7 +1,6 @@
-
 const express = require('express');
 const app = express();
-const PORT = 980; // Change the port to 980
+const PORT = 3000; // Use an available port
 
 app.get('/', (req, res) => {
     res.send('Hello, Cloud Run!');
