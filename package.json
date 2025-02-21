@@ -1,0 +1,24 @@
+{
+  "name": "cloud-run-cicd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hridhya2003/cloud-run-cicd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hridhya2003/cloud-run-cicd/issues"
+  },
+  "homepage": "https://github.com/hridhya2003/cloud-run-cicd#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
