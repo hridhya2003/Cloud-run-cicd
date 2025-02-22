@@ -1,9 +1,9 @@
-name: Deploy to Google Cloud
+name: Deploy to GCP
 
 on:
   push:
     branches:
-      - main
+      - main  # Runs on push to main branch
 
 jobs:
   deploy:
@@ -23,23 +23,15 @@ jobs:
       - name: Setup gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: 'git123'
+          project_id: 'your-gcp-project-id'
 
       - name: Verify Authentication
         run: gcloud auth list
 
-      - name: Check if secrets are set
+      - name: Deploy to Cloud Run
         run: |
-          if [ -z "${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" ]; then
-            echo "::error::❌ GCP_WORKLOAD_IDENTITY_PROVIDER is NOT set!"
-            exit 1
-          else
-            echo "::notice::✅ GCP_WORKLOAD_IDENTITY_PROVIDER is set."
-          fi
-
-          if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" ]; then
-            echo "::error::❌ GCP_SERVICE_ACCOUNT_KEY is NOT set!"
-            exit 1
-          else
-            echo "::notice::✅ GCP_SERVICE_ACCOUNT_KEY is set."
-          fi
+          gcloud run deploy my-service \
+            --image gcr.io/your-gcp-project-id/my-image \
+            --platform managed \
+            --region us-central1 \
+            --allow-unauthenticated
