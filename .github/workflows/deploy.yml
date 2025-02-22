@@ -24,3 +24,18 @@ jobs:
   uses: actions/checkout@v4
   with:
     submodules: true  # Fetches submodules correctly
+- name: Check if secrets are set
+  run: |
+    if [ -z "${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" ]; then
+      echo "::error::❌ GCP_WORKLOAD_IDENTITY_PROVIDER is NOT set!"
+      exit 1
+    else
+      echo "::notice::✅ GCP_WORKLOAD_IDENTITY_PROVIDER is set."
+    fi
+
+    if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" ]; then
+      echo "::error::❌ GCP_SERVICE_ACCOUNT_KEY is NOT set!"
+      exit 1
+    else
+      echo "::notice::✅ GCP_SERVICE_ACCOUNT_KEY is set."
+    fi
