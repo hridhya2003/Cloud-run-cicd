@@ -9,7 +9,7 @@ jobs:
       - name: Authenticate Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'  # ✅ Use JSON-based authentication
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'  # ✅ Only this, remove workload_identity_provider
 
       - name: Setup gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
