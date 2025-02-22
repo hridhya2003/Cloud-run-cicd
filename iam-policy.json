@@ -1,0 +1,157 @@
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-140800216931@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:140800216931@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "user:hridhyaaugustine11@gmail.com"
+      ],
+      "role": "roles/cloudbuild.builds.editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-140800216931@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-140800216931@compute-system.iam.gserviceaccount.com"
+      ],
+      "role": "roles/compute.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:140800216931-compute@developer.gserviceaccount.com",
+        "serviceAccount:140800216931@cloudbuild.gserviceaccount.com",
+        "user:hridhyaaugustine11@gmail.com"
+      ],
+      "role": "roles/container.admin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-140800216931@gcp-sa-gkenode.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.defaultNodeServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:140800216931-compute@developer.gserviceaccount.com",
+        "serviceAccount:140800216931@cloudbuild.gserviceaccount.com"
+      ],
+      "role": "roles/container.developer"
+    },
+    {
+      "members": [
+        "serviceAccount:service-140800216931@container-engine-robot.iam.gserviceaccount.com"
+      ],
+      "role": "roles/container.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-140800216931@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:140800216931-compute@developer.gserviceaccount.com",
+        "serviceAccount:140800216931@cloudservices.gserviceaccount.com",
+        "user:hridhyaaugustine11@gmail.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "user:hridhyaaugustine11@gmail.com"
+      ],
+      "role": "roles/iam.workloadIdentityPoolAdmin"
+    },
+    {
+      "condition": {
+        "expression": "request.time < timestamp(\"2025-02-20T06:31:48.956Z\")",
+        "title": "cloudbuild-connection-setup"
+      },
+      "members": [
+        "user:hridhyaaugustine11@gmail.com"
+      ],
+      "role": "roles/iam.workloadIdentityPoolAdmin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-140800216931@gcp-sa-networkconnectivity.iam.gserviceaccount.com"
+      ],
+      "role": "roles/networkconnectivity.serviceAgent"
+    },
+    {
+      "members": [
+        "user:hridhyaaugustine11@gmail.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-140800216931@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:github-actions-deployer@git123.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.admin"
+    },
+    {
+      "condition": {
+        "expression": "request.time < timestamp(\"2025-02-20T06:31:48.956Z\")",
+        "title": "cloudbuild-connection-setup"
+      },
+      "members": [
+        "serviceAccount:github-actions-deployer@git123.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.admin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-140800216931@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    },
+    {
+      "condition": {
+        "expression": "request.time < timestamp(\"2025-02-20T06:31:48.956Z\")",
+        "title": "cloudbuild-connection-setup"
+      },
+      "members": [
+        "serviceAccount:service-140800216931@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/secretmanager.admin"
+    },
+    {
+      "members": [
+        "user:hridhyaaugustine11@gmail.com"
+      ],
+      "role": "roles/servicemanagement.serviceController"
+    },
+    {
+      "members": [
+        "serviceAccount:140800216931-compute@developer.gserviceaccount.com",
+        "serviceAccount:140800216931@cloudbuild.gserviceaccount.com",
+        "serviceAccount:github-actions-deployer@git123.iam.gserviceaccount.com"
+      ],
+      "role": "roles/storage.admin"
+    }
+  ],
+  "etag": "BwYutDCEFGk=",
+  "version": 3
+}
