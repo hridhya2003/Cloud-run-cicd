@@ -10,31 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Authenticate with Google Cloud
-      uses: google-github-actions/auth@v1
-      with:
-        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'  # Use Service Account Key
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-    - name: Set up Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@v1
-      with:
-        project_id: your-gcp-project-id
+      - name: Configure Google Cloud SDK
+        run: |
+          gcloud auth configure-docker us-central1-docker.pkg.dev
+          gcloud config set project your-gcp-project-id
 
-    - name: Configure Docker authentication
-      run: |
-        gcloud auth configure-docker us-central1-docker.pkg.dev
+      - name: Build and Push Docker Image
+        run: |
+          gcloud builds submit --tag us-central1-docker.pkg.dev/your-gcp-project-id/your-repo-name/your-image-name
 
-    - name: Build and push Docker image
-      run: |
-        gcloud builds submit --tag us-central1-docker.pkg.dev/YOUR_PROJECT_ID/YOUR_REPO/YOUR_IMAGE_NAME
-
-    - name: Deploy to Cloud Run
-      run: |
-        gcloud run deploy YOUR_SERVICE_NAME \
-          --image us-central1-docker.pkg.dev/YOUR_PROJECT_ID/YOUR_REPO/YOUR_IMAGE_NAME \
-          --platform managed \
-          --region us-central1 \
-          --allow-unauthenticated
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy your-service-name \
+            --image=us-central1-docker.pkg.dev/your-gcp-project-id/your-repo-name/your-image-name \
+            --region=us-central1 \
+            --platform=managed \
+            --allow-unauthenticated
