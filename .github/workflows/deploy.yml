@@ -1,3 +1,10 @@
+name: Deploy to Google Cloud
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -6,12 +13,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-- name: Authenticate to Google Cloud
-  uses: google-github-actions/auth@v1
-  with:
-    credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-    create_credentials_file: true
-    export_environment_variables: true
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          create_credentials_file: true
+          export_environment_variables: true
 
       - name: Setup gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
@@ -20,22 +27,19 @@ jobs:
 
       - name: Verify Authentication
         run: gcloud auth list
-- name: Checkout repository
-  uses: actions/checkout@v4
-  with:
-    submodules: true  # Fetches submodules correctly
-- name: Check if secrets are set
-  run: |
-    if [ -z "${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" ]; then
-      echo "::error::❌ GCP_WORKLOAD_IDENTITY_PROVIDER is NOT set!"
-      exit 1
-    else
-      echo "::notice::✅ GCP_WORKLOAD_IDENTITY_PROVIDER is set."
-    fi
 
-    if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" ]; then
-      echo "::error::❌ GCP_SERVICE_ACCOUNT_KEY is NOT set!"
-      exit 1
-    else
-      echo "::notice::✅ GCP_SERVICE_ACCOUNT_KEY is set."
-    fi
+      - name: Check if secrets are set
+        run: |
+          if [ -z "${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" ]; then
+            echo "::error::❌ GCP_WORKLOAD_IDENTITY_PROVIDER is NOT set!"
+            exit 1
+          else
+            echo "::notice::✅ GCP_WORKLOAD_IDENTITY_PROVIDER is set."
+          fi
+
+          if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" ]; then
+            echo "::error::❌ GCP_SERVICE_ACCOUNT_KEY is NOT set!"
+            exit 1
+          else
+            echo "::notice::✅ GCP_SERVICE_ACCOUNT_KEY is set."
+          fi
