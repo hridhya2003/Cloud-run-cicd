@@ -34,3 +34,8 @@ jobs:
             --region=us-central1 \
             --platform=managed \
             --allow-unauthenticated
+
+- name: Debug Secrets
+  run: echo "Secret Length: ${#GCP_CREDENTIALS}"
+  env:
+    GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
