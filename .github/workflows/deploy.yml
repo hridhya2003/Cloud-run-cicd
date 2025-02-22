@@ -6,15 +6,17 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Authenticate Google Cloud
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'  # ✅ Only this, remove workload_identity_provider
+- name: Authenticate to Google Cloud
+  uses: google-github-actions/auth@v1
+  with:
+    credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+    create_credentials_file: true
+    export_environment_variables: true
 
       - name: Setup gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: 'your-project-id'
+          project_id: 'git123'
 
       - name: Verify Authentication
         run: gcloud auth list
