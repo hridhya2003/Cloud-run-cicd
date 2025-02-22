@@ -24,3 +24,12 @@ jobs:
       - name: Verify authentication
         run: gcloud auth list
 
+- name: Debug GCP_CREDENTIALS Secret
+  run: |
+    if [ -z "${{ secrets.GCP_CREDENTIALS }}" ]; then
+      echo "GCP_CREDENTIALS secret is empty or not set!"
+      exit 1
+    else
+      echo "GCP_CREDENTIALS is set. Checking JSON format..."
+      echo '${{ secrets.GCP_CREDENTIALS }}' | jq .
+    fi
