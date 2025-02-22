@@ -1,11 +1,18 @@
-const express = require('express');
+const express = require("express");
+
 const app = express();
-const PORT = 3000; // Use an available port
+const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-    res.send('Hello, Cloud Run!');
+app.get("/", (req, res) => {
+  res.status(200).send("Hello, World!");
 });
 
-app.listen(PORT, () => {
+// Only start the server if this file is run directly (not during tests)
+if (require.main === module) {
+  app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
-});
+  });
+}
+
+// Export app for testing
+module.exports = app;
