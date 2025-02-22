@@ -9,12 +9,12 @@ jobs:
       - name: Authenticate Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'  # ✅ Use JSON-based authentication
 
       - name: Setup gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: 'git123'
+          project_id: 'your-project-id'
 
       - name: Verify Authentication
         run: gcloud auth list
