@@ -20,3 +20,7 @@ jobs:
 
       - name: Verify Authentication
         run: gcloud auth list
+- name: Checkout repository
+  uses: actions/checkout@v4
+  with:
+    submodules: true  # Fetches submodules correctly
