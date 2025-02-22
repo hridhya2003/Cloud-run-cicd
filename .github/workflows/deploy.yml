@@ -1,8 +1,32 @@
-- name: Authenticate to Google Cloud
-  uses: google-github-actions/auth@v1
-  with:
-    credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+name: Deploy to Cloud Run
 
-- name: Configure Docker for Artifact Registry
-  run: |
-    gcloud auth configure-docker us-central1-docker.pkg.dev
+on:
+  push:
+    branches:
+      - main  # Change this if you're using a different branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Authenticate with Google Cloud
+      run: |
+        echo '${{ secrets.GCP_CREDENTIALS }}' > key.json
+        gcloud auth activate-service-account --key-file=key.json
+        gcloud auth configure-docker us-central1-docker.pkg.dev  # Change region if needed
+
+    - name: Build and push Docker image
+      run: |
+        gcloud builds submit --tag us-central1-docker.pkg.dev/YOUR_PROJECT_ID/YOUR_REPO/YOUR_IMAGE_NAME
+
+    - name: Deploy to Cloud Run
+      run: |
+        gcloud run deploy YOUR_SERVICE_NAME \
+          --image us-central1-docker.pkg.dev/YOUR_PROJECT_ID/YOUR_REPO/YOUR_IMAGE_NAME \
+          --platform managed \
+          --region us-central1 \
+          --allow-unauthenticated
