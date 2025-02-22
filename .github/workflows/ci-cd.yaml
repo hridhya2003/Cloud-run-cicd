@@ -44,7 +44,7 @@ jobs:
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy my-app \
-            --image gcr.io/your-gcp-project-id/my-app:latest \
+            --image gcr.io/git123/my-app:latest \
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated
