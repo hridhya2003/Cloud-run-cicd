@@ -3,7 +3,7 @@ name: Deploy to Cloud Run
 on:
   push:
     branches:
-      - main
+      - main  # Change branch if needed
 
 jobs:
   deploy:
@@ -11,31 +11,23 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Configure Google Cloud SDK
+      - name: Configure Docker for Artifact Registry
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev
-          gcloud config set project your-gcp-project-id
-
-      - name: Build and Push Docker Image
-        run: |
-          gcloud builds submit --tag us-central1-docker.pkg.dev/your-gcp-project-id/your-repo-name/your-image-name
+          echo '${{ secrets.GCP_CREDENTIALS }}' > key.json
+          gcloud auth activate-service-account --key-file=key.json
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy your-service-name \
-            --image=us-central1-docker.pkg.dev/your-gcp-project-id/your-repo-name/your-image-name \
-            --region=us-central1 \
-            --platform=managed \
+          gcloud run deploy my-app \
+            --image us-central1-docker.pkg.dev/my-project/my-repo/my-image \
+            --platform managed \
+            --region us-central1 \
             --allow-unauthenticated
-
-- name: Debug Secrets
-  run: echo "Secret Length: ${#GCP_CREDENTIALS}"
-  env:
-    GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
