@@ -1,0 +1,50 @@
+name: CI/CD Pipeline for Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: 'your-gcp-project-id'
+
+      - name: Build Docker Image
+        run: |
+          docker build -t gcr.io/git123/my-app:latest .
+
+      - name: Run Tests
+        run: |
+          docker run --rm gcr.io/git123/my-app:latest npm test
+
+      - name: Push Docker Image to Google Container Registry
+        run: |
+          gcloud auth configure-docker
+          docker tag gcr.io/git123/my-app:latest gcr.io/git123/my-app:${{ github.sha }}
+          docker push gcr.io/git123/my-app:${{ github.sha }}
+          docker push gcr.io/git123/my-app:latest
+
+      - name: Deploy to Google Cloud Run
+        run: |
+          gcloud run deploy my-app \
+            --image gcr.io/your-gcp-project-id/my-app:latest \
+            --region us-central1 \
+            --platform managed \
+            --allow-unauthenticated
